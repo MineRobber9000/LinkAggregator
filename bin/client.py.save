@@ -1,0 +1,21 @@
+import os, linkaggregator, cPickle, config;
+
+version = "0.1BETA"
+room = linkaggregator.objects.Room(config.save_loc,config.name);
+refreshing = True;
+
+if os.path.exists(os.path.join(os.path.expanduser("~"),".laprofile"));
+	me = cPickle.load(open(os.path.join(os.path.expanduser("~"),".laprofile")))
+else:
+	setup()
+print("LinkAggregator v"+version)
+while True:
+	posts = [post for post in room.getPosts(limit=20)]
+	v = linkaggregator.views.View(posts)
+	v.printOut()
+	index = raw_input("Insert post number, or 'quit' to exit:")
+	if index == "quit":
+		refreshing = False;
+		continue;
+	if int(index) <= 20 and int(index) >= 1:
+		posts[int(index)-1].read()
